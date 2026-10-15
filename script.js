@@ -56,34 +56,34 @@ sections.slice(1).forEach(s => {
   s.appendChild(btn);
 });
 
-// The letter: decode it in place, one character at a time.
+// The letter: decode it like a cryptogram, one cipher letter at a time,
+// starting with the most common. Every copy of that letter flips together.
 const CIPHER_KEY = "DRSKHBTXANQUOIYMPLVWFZJEGC"; // A-Z in the plain text became these letters
 
 document.getElementById("decipher").addEventListener("click", e => {
   e.target.disabled = true;
   const pre = document.querySelector(".cipher");
-  const from = pre.textContent;
-  const decode = ch => {
-    const i = CIPHER_KEY.indexOf(ch.toUpperCase());
-    if (i < 0) return ch;
-    const p = String.fromCharCode(65 + i);
-    return ch === ch.toUpperCase() ? p : p.toLowerCase();
-  };
-  const to = [...from].map(decode).join("");
+  const byLetter = {};
 
-  const done = document.createElement("span");
-  const todo = document.createElement("span");
-  todo.className = "todo";
-  pre.replaceChildren(done, todo);
+  pre.replaceChildren(...[...pre.textContent].map(ch => {
+    const k = ch.toUpperCase();
+    if (!CIPHER_KEY.includes(k)) return document.createTextNode(ch);
+    const span = document.createElement("span");
+    span.textContent = ch;
+    (byLetter[k] = byLetter[k] || []).push(span);
+    return span;
+  }));
 
-  const start = performance.now();
-  const msPerChar = 6;
-  (function frame(now) {
-    const i = Math.min(to.length, Math.floor((now - start) / msPerChar));
-    done.textContent = to.slice(0, i);
-    todo.textContent = from.slice(i);
-    if (i < to.length) requestAnimationFrame(frame);
-  })(start);
+  const order = Object.keys(byLetter).sort((a, b) => byLetter[b].length - byLetter[a].length);
+  order.forEach((k, step) => setTimeout(() => {
+    const plain = String.fromCharCode(65 + CIPHER_KEY.indexOf(k));
+    byLetter[k].forEach(span => {
+      span.textContent = span.textContent === k ? plain : plain.toLowerCase();
+      span.className = "plain fresh";
+    });
+    setTimeout(() => byLetter[k].forEach(span => span.classList.remove("fresh")), 30);
+    if (step === order.length - 1) pre.classList.add("decoded");
+  }, 200 + step * 160));
 });
 
 // Text answers

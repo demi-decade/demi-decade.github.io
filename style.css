@@ -49,18 +49,29 @@ h2 .num { color: var(--accent); margin-right: 6px; }
 .solved .reveal { display: block; }
 
 summary { cursor: pointer; color: var(--accent); }
-.cipher .todo { color: var(--faded); }
-#decipher { margin-top: 4px; }
+.cipher .plain { color: var(--ink); transition: color 0.8s; }
+.cipher.decoded { color: var(--ink); transition: color 0.8s; }
+.cipher .plain.fresh { color: var(--accent); transition: none; }
+#decipher {
+  background: none;
+  color: var(--accent);
+  padding: 0;
+  margin: 14px 0 0 22px;
+  font-size: 17px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+#decipher:hover { background: none; color: var(--ink); }
 #decipher:disabled { display: none; }
 .cipher {
   white-space: pre-wrap;
-  font-family: "Courier New", monospace;
+  font-family: "Courier Prime", "Courier New", monospace;
   font-size: 15px;
-  line-height: 1.5;
-  background: var(--cell);
-  border: 1px solid var(--rule);
-  padding: 18px;
-  margin-top: 12px;
+  line-height: 1.65;
+  color: var(--faded);
+  border-left: 2px solid var(--rule);
+  padding: 4px 0 4px 20px;
+  margin: 16px 0 0;
 }
 
 /* answer boxes */
