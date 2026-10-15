@@ -51,7 +51,7 @@ function solve(n) {
 }
 
 // Text answers
-document.querySelectorAll("form.answer").forEach(form => {
+document.querySelectorAll("form.answer[data-answer]").forEach(form => {
   const input = form.querySelector("input");
   const msg = form.querySelector(".msg");
   const n = Number(form.closest(".puzzle").dataset.n);
@@ -71,27 +71,90 @@ document.querySelectorAll("form.answer").forEach(form => {
   });
 });
 
-// Bracket City: wrap each [...] in a span shaded by depth, *...* in italics.
+// Bracket City. One entry per "[", in the order they appear in the text.
+// The first answer listed is what gets shown once it's solved; any of them is accepted.
+const BRACKETS = [
+  ["C.S.", "cs"],              // "To [...] at all is to be vulnerable" -- __ lewis
+  ["love"],                    // w[...] comes before fifteen, to some
+  ["hat"],                     // yours says "Michigan La[...]e" for some reason
+  ["TODO"],                    // 🩸 red --> ___ --> fit 💪
+  ["so", "sew"],               // 🎵 a [...]le pulling thread 🎵
+  ["need"],                    // all you __ is love!
+  ["line"],                    // 🪢 [...] ____ up ⬆️
+  ["bow"],                     // what you do after one of your orchestra per[...]ances
+  ["form"],                    // __ vs. function
+  ["cell"],                    // might be Eucaryotic or Procaryotic
+  ["BS", "bs"],                // What's a babes without lincoln?
+  ["Chemical", "chem"],        // the a[...]'s family?
+  ["tom"],                     // Jerry's arch enemy
+  ["Engineering"],             // One of the E s in EECS
+];
+
 (function () {
   const el = document.getElementById("brackets");
-  const text = el.textContent;
-  let html = "", depth = 0;
-  let em = false;
-  for (const ch of text) {
+  const form = document.getElementById("bracket-form");
+  const input = form.querySelector("input");
+  const msg = form.querySelector(".msg");
+  const SAVE = "five-for-five-brackets";
+
+  // Parse the text into a tree of strings and bracket nodes.
+  const nodes = [];
+  const root = { kids: [] };
+  const stack = [root];
+  for (const ch of el.textContent.trim()) {
+    const top = stack[stack.length - 1];
     if (ch === "[") {
-      depth++;
-      html += `<span class="b d${Math.min(depth, 4)}"><span class="br">[</span>`;
+      const node = { kids: [], id: nodes.length, solved: false };
+      nodes.push(node);
+      top.kids.push(node);
+      stack.push(node);
     } else if (ch === "]") {
-      depth--;
-      html += `<span class="br">]</span></span>`;
-    } else if (ch === "*") {
-      html += em ? "</em>" : "<em>";
-      em = !em;
+      stack.pop();
+    } else if (typeof top.kids[top.kids.length - 1] === "string") {
+      top.kids[top.kids.length - 1] += ch;
     } else {
-      html += ch.replace("&", "&amp;").replace("<", "&lt;");
+      top.kids.push(ch);
     }
   }
-  el.innerHTML = html;
+
+  let saved = [];
+  try { saved = JSON.parse(localStorage.getItem(SAVE)) || []; } catch {}
+  const all = load() >= 3;
+  nodes.forEach(n => n.solved = all || saved.includes(n.id));
+
+  const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+  const isOpen = n => !n.solved && n.kids.every(k => typeof k === "string" || k.solved);
+
+  function html(node) {
+    return node.kids.map(k => {
+      if (typeof k === "string") return esc(k);
+      if (k.solved) return `<span class="done">${esc(BRACKETS[k.id][0])}</span>`;
+      const inner = `[${html(k)}]`;
+      return isOpen(k) ? `<span class="live">${inner}</span>` : inner;
+    }).join("");
+  }
+
+  function draw() { el.innerHTML = html(root); }
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const guess = norm(input.value);
+    if (!guess) return;
+    const hit = nodes.find(n => isOpen(n) && BRACKETS[n.id].some(a => norm(a) === guess));
+    if (hit) {
+      hit.solved = true;
+      try { localStorage.setItem(SAVE, JSON.stringify(nodes.filter(n => n.solved).map(n => n.id))); } catch {}
+      input.value = "";
+      msg.textContent = "";
+      draw();
+      if (nodes.every(n => n.solved)) solve(3);
+    } else {
+      msg.textContent = "Not quite.";
+      msg.className = "msg";
+    }
+  });
+
+  draw();
 })();
 
 // Crossword
