@@ -58,7 +58,6 @@ sections.slice(1).forEach(s => {
 
 // The letter: decode it in place, one character at a time.
 const CIPHER_KEY = "DRSKHBTXANQUOIYMPLVWFZJEGC"; // A-Z in the plain text became these letters
-const LINK = "https://demi-decade.github.io";   // left as-is in the cipher so it stays clickable
 
 document.getElementById("decipher").addEventListener("click", e => {
   e.target.disabled = true;
@@ -70,7 +69,7 @@ document.getElementById("decipher").addEventListener("click", e => {
     const p = String.fromCharCode(65 + i);
     return ch === ch.toUpperCase() ? p : p.toLowerCase();
   };
-  const to = from.split(LINK).map(part => [...part].map(decode).join("")).join(LINK);
+  const to = [...from].map(decode).join("");
 
   const done = document.createElement("span");
   const todo = document.createElement("span");
