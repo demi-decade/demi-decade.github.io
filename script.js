@@ -77,7 +77,7 @@ const BRACKETS = [
   ["C.S.", "cs"],              // "To [...] at all is to be vulnerable" -- __ lewis
   ["love"],                    // w[...] comes before fifteen, to some
   ["hat"],                     // yours says "Michigan La[...]e" for some reason
-  ["TODO"],                    // 🩸 red --> ___ --> fit 💪
+  ["cross"],                   // 🩸 red --> ___ --> fit 💪
   ["so", "sew"],               // 🎵 a [...]le pulling thread 🎵
   ["need"],                    // all you __ is love!
   ["line"],                    // 🪢 [...] ____ up ⬆️
