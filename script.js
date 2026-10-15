@@ -85,7 +85,7 @@ const BRACKETS = [
   ["form"],                    // __ vs. function
   ["cell"],                    // might be Eucaryotic or Procaryotic
   ["BS", "bs"],                // What's a babes without lincoln?
-  ["Chemical", "chem"],        // the a[...]'s family?
+  ["Nuclear"],                 // the a[...]'s family?
   ["tom"],                     // Jerry's arch enemy
   ["Engineering"],             // One of the E s in EECS
 ];
