@@ -15,7 +15,7 @@ const CLUES = {
     9: "What evening puzzles somehow turn into",
   },
   down: {
-    1: "\"I love you CutenHiemer,\" for short",
+    1: "\"I love you, CutenHiemer,\" for short",
     3: "Aaaaaa counterpart",
     4: "\"Don't know how you do the ___ that you do so well, it's a spell, hell, makes me wanna shoop!\"",
     7: "Where I went promptly after I biked to come see you in the dark",
