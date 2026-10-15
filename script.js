@@ -300,9 +300,45 @@ const BRACKETS = [
   }
 })();
 
-// Hide photo slots that haven't been filled in yet.
-document.querySelectorAll(".photos img").forEach(img => {
-  img.addEventListener("error", () => img.remove());
-});
+// Where Taken: one photo at a time, photos/1.jpg, photos/2.jpg, ... in this order.
+const PLACES = ["california", "wisconsin", "illinois", "space", "indiana", "michigan", "ontario"];
+
+(function () {
+  const img = document.getElementById("photo");
+  const count = document.getElementById("photo-count");
+  const form = document.getElementById("photo-form");
+  const input = form.querySelector("input");
+  const msg = form.querySelector(".msg");
+  const SAVE = "five-for-five-photos";
+
+  let i = 0;
+  try { i = Number(localStorage.getItem(SAVE)) || 0; } catch {}
+  if (load() >= 5) i = PLACES.length - 1;
+
+  function show() {
+    img.src = `photos/${i + 1}.jpg`;
+    count.textContent = `${i + 1} of ${PLACES.length}`;
+    if (i + 1 < PLACES.length) new Image().src = `photos/${i + 2}.jpg`;
+  }
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const guess = norm(input.value);
+    if (!guess) return;
+    if (guess !== norm(PLACES[i])) {
+      msg.textContent = "Not quite.";
+      msg.className = "msg";
+      return;
+    }
+    input.value = "";
+    msg.textContent = "";
+    if (i + 1 === PLACES.length) return solve(5);
+    i++;
+    try { localStorage.setItem(SAVE, i); } catch {}
+    show();
+  });
+
+  show();
+})();
 
 render();

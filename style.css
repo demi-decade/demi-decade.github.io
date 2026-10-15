@@ -134,15 +134,16 @@ button:hover { background: var(--accent); }
 .clues li.on { color: var(--accent); }
 
 /* photos */
-.photos { columns: 2 220px; column-gap: 12px; }
-.photos img {
-  width: 100%;
+.photo { margin: 0; text-align: center; }
+.photo img {
+  max-width: 100%;
+  max-height: 70vh;
   display: block;
-  margin-bottom: 12px;
+  margin: 0 auto;
   border: 6px solid #fff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-  break-inside: avoid;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
+.photo figcaption { margin-top: 10px; font-size: 15px; color: var(--faded); letter-spacing: 0.1em; }
 
 footer { text-align: center; border-top: 1px solid var(--rule); padding-top: 48px; font-size: 26px; font-style: italic; }
 footer[hidden] { display: none; }

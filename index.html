@@ -74,17 +74,13 @@ Klhj</pre>
     </section>
 
     <section class="puzzle" data-n="5">
-      <h2><span class="num">V.</span> Where Were We?</h2>
-      <p class="note">All of these were taken in the same state. Which one?</p>
-      <div class="photos">
-        <img src="photos/1.jpg" alt="">
-        <img src="photos/2.jpg" alt="">
-        <img src="photos/3.jpg" alt="">
-        <img src="photos/4.jpg" alt="">
-        <img src="photos/5.jpg" alt="">
-      </div>
-      <form class="answer" data-answer="michigan">
-        <input type="text" autocomplete="off" spellcheck="false" aria-label="State" placeholder="State">
+      <h2><span class="num">V.</span> Where Taken</h2>
+      <figure class="photo">
+        <img id="photo" src="photos/1.jpg" alt="">
+        <figcaption id="photo-count"></figcaption>
+      </figure>
+      <form class="answer" id="photo-form">
+        <input type="text" autocomplete="off" spellcheck="false" aria-label="Where was this taken?" placeholder="Where was this taken?">
         <button>Check</button>
         <span class="msg"></span>
       </form>
