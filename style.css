@@ -1,10 +1,10 @@
 :root {
-  --paper: #f6f1e7;
+  --paper: #ffffff;
   --ink: #2b2522;
   --faded: #8a7f74;
   --rule: #d9cfbf;
   --accent: #7a2e2a;
-  --cell: #fffdf8;
+  --cell: #ffffff;
 }
 
 * { box-sizing: border-box; }
@@ -44,13 +44,10 @@ h1 { font-weight: 400; font-size: 52px; margin: 8px 0 4px; letter-spacing: 0.01e
 h2 { font-weight: 400; font-size: 28px; margin: 0 0 14px; }
 h2 .num { color: var(--accent); margin-right: 6px; }
 .puzzle.solved h2::after {
-  content: "solved";
-  margin-left: 12px;
-  font-size: 13px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--faded);
-  vertical-align: middle;
+  content: "\2713";
+  margin-left: 10px;
+  font-size: 24px;
+  color: var(--accent);
 }
 
 .note { color: var(--faded); font-style: italic; margin-top: 0; }
