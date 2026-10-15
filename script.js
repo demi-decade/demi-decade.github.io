@@ -42,13 +42,28 @@ function render() {
     s.hidden = n > done + 1;
     s.classList.toggle("solved", n <= done);
   });
-  document.getElementById("finale").hidden = done < sections.length;
 }
 
 function solve(n) {
   if (n > load()) save(n);
+  document.querySelector(`.puzzle[data-n="${n}"]`).classList.remove("replay");
   render();
 }
+
+// "Play again" on solved puzzles. Each puzzle registers how to reset itself.
+const RESETS = {};
+sections.slice(1).forEach(s => {
+  const btn = document.createElement("button");
+  btn.className = "again";
+  btn.textContent = "Play again";
+  btn.addEventListener("click", () => {
+    s.classList.add("replay");
+    s.querySelectorAll(".msg").forEach(m => m.textContent = "");
+    s.querySelectorAll(".answer input").forEach(i => i.value = "");
+    (RESETS[s.dataset.n] || (() => {}))();
+  });
+  s.appendChild(btn);
+});
 
 // Text answers
 document.querySelectorAll("form.answer[data-answer]").forEach(form => {
@@ -135,6 +150,12 @@ const BRACKETS = [
   }
 
   function draw() { el.innerHTML = html(root); }
+
+  RESETS[3] = () => {
+    nodes.forEach(n => n.solved = false);
+    try { localStorage.removeItem(SAVE); } catch {}
+    draw();
+  };
 
   form.addEventListener("submit", e => {
     e.preventDefault();
@@ -294,6 +315,10 @@ const BRACKETS = [
     });
   });
 
+  RESETS[4] = () => {
+    cells.flat().filter(Boolean).forEach(({ input }) => { input.value = ""; input.readOnly = false; });
+  };
+
   // If it was already solved on this device, fill it in.
   if (load() >= 4) {
     cells.flat().filter(Boolean).forEach(({ input, r, c }) => { input.value = GRID[r][c]; input.readOnly = true; });
@@ -338,6 +363,12 @@ const PLACES = ["california", "wisconsin", "illinois", "space", "indiana", "mich
     try { localStorage.setItem(SAVE, i); } catch {}
     show();
   });
+
+  RESETS[5] = () => {
+    i = 0;
+    try { localStorage.setItem(SAVE, 0); } catch {}
+    show();
+  };
 
   show();
 })();
