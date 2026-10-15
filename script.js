@@ -9,17 +9,17 @@ const GRID = [
 const CLUES = {
   across: {
     1: "Me, myself and ___",
-    2: "What we've been in for five years",
+    2: "What we've been in for 5 lovely years",
     5: "My person",
-    6: "Secret messages, like the one that got you here",
+    6: "What Emeline calls code files",
     9: "What evening puzzles somehow turn into",
   },
   down: {
-    1: "Tolstoy's Ivan ___",
-    3: "Sounds from a crowd at a fireworks show",
-    4: "Streaming service once owned by Walmart",
-    7: "TV drama set in a Chicago hospital",
-    8: "Ship's prefix",
+    1: "\"I love you CutenHiemer,\" for short",
+    3: "Aaaaaa counterpart",
+    4: "\"Don't know how you do the ___ that you do so well, it's a spell, hell, makes me wanna shoop!\"",
+    7: "Where I went promptly after I biked to come see you in the dark",
+    8: "Something a small snake should say",
   },
 };
 
