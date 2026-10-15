@@ -286,8 +286,6 @@ const BRACKETS = [
     });
     const msg = document.getElementById("xw-msg");
     if (full && right) {
-      msg.textContent = "That's it.";
-      msg.className = "msg good";
       cells.flat().filter(Boolean).forEach(({ input }) => input.readOnly = true);
       solve(4);
     } else if (full) {
