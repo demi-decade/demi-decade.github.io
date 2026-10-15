@@ -306,7 +306,7 @@ const BRACKETS = [
 
 // Where Taken: one photo at a time, photos/1.jpg, photos/2.jpg, ... in this order.
 // Use an array to accept more than one answer for a photo.
-const PLACES = ["california", "wisconsin", "illinois", "space", "indiana", "michigan", "ontario", "utah", ["carolina", "south carolina"]];
+const PLACES = ["california", "wisconsin", "illinois", "space", "indiana", "michigan", "ontario", "utah", ["carolina", "south carolina", "north carolina"]];
 
 (function () {
   const img = document.getElementById("photo");
