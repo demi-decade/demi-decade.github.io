@@ -90,18 +90,19 @@ button {
 button:hover { background: var(--accent); }
 .msg { font-style: italic; color: var(--faded); flex-basis: 100%; min-height: 1.5em; margin: 0; }
 .msg.good { color: var(--accent); }
-.solved:not(.replay) .answer { display: none; }
-.again {
+.solved .answer { display: none; }
+.skip {
   background: none;
   color: var(--faded);
   padding: 0;
+  margin-top: 8px;
   font-size: 15px;
   font-style: italic;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-.again:hover { background: none; color: var(--accent); }
-.puzzle:not(.solved) .again, .puzzle.replay .again { display: none; }
+.skip:hover { background: none; color: var(--accent); }
+.solved .skip { display: none; }
 
 /* bracket city */
 .brackets { font-size: 21px; line-height: 2; }
@@ -136,7 +137,7 @@ button:hover { background: var(--accent); }
 }
 .cellbox.word { background: #efe4cf; }
 .cellbox.cur { background: #e2c9a6; }
-.solved:not(.replay) .cellbox:not(.block) { background: var(--cell); }
+.solved .cellbox:not(.block) { background: var(--cell); }
 .clues { display: flex; gap: 28px; flex: 1 1 220px; font-size: 17px; }
 .clues h3 { font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; margin: 0 0 6px; }
 .clues ol { list-style: none; padding: 0; margin: 0; }

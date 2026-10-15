@@ -23,20 +23,14 @@ const CLUES = {
   },
 };
 
-const KEY = "five-for-five";
 const sections = [...document.querySelectorAll(".puzzle")];
 const norm = s => s.toLowerCase().replace(/[^a-z0-9]/g, "");
 
-function load() {
-  try { return Number(localStorage.getItem(KEY)) || 1; } catch { return 1; }
-}
-function save(n) {
-  try { localStorage.setItem(KEY, n); } catch {}
-}
+// Nothing is saved, so a refresh starts over. The letter (puzzle 1) is already done.
+let done = 1;
 
 // Show every puzzle up to and including the first unsolved one.
 function render() {
-  const done = load();
   sections.forEach(s => {
     const n = Number(s.dataset.n);
     s.hidden = n > done + 1;
@@ -45,22 +39,19 @@ function render() {
 }
 
 function solve(n) {
-  if (n > load()) save(n);
-  document.querySelector(`.puzzle[data-n="${n}"]`).classList.remove("replay");
+  done = Math.max(done, n);
   render();
 }
 
-// "Play again" on solved puzzles. Each puzzle registers how to reset itself.
-const RESETS = {};
+// Skip button on each puzzle. A puzzle can register how to show itself as finished.
+const SKIPS = {};
 sections.slice(1).forEach(s => {
   const btn = document.createElement("button");
-  btn.className = "again";
-  btn.textContent = "Play again";
+  btn.className = "skip";
+  btn.textContent = "Skip";
   btn.addEventListener("click", () => {
-    s.classList.add("replay");
-    s.querySelectorAll(".msg").forEach(m => m.textContent = "");
-    s.querySelectorAll(".answer input").forEach(i => i.value = "");
-    (RESETS[s.dataset.n] || (() => {}))();
+    (SKIPS[s.dataset.n] || (() => {}))();
+    solve(Number(s.dataset.n));
   });
   s.appendChild(btn);
 });
@@ -110,7 +101,6 @@ const BRACKETS = [
   const form = document.getElementById("bracket-form");
   const input = form.querySelector("input");
   const msg = form.querySelector(".msg");
-  const SAVE = "five-for-five-brackets";
 
   // Parse the text into a tree of strings and bracket nodes.
   const nodes = [];
@@ -132,10 +122,6 @@ const BRACKETS = [
     }
   }
 
-  let saved = [];
-  try { saved = JSON.parse(localStorage.getItem(SAVE)) || []; } catch {}
-  const all = load() >= 3;
-  nodes.forEach(n => n.solved = all || saved.includes(n.id));
 
   const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
   const isOpen = n => !n.solved && n.kids.every(k => typeof k === "string" || k.solved);
@@ -151,9 +137,8 @@ const BRACKETS = [
 
   function draw() { el.innerHTML = html(root); }
 
-  RESETS[3] = () => {
-    nodes.forEach(n => n.solved = false);
-    try { localStorage.removeItem(SAVE); } catch {}
+  SKIPS[3] = () => {
+    nodes.forEach(n => n.solved = true);
     draw();
   };
 
@@ -164,7 +149,6 @@ const BRACKETS = [
     const hit = nodes.find(n => isOpen(n) && BRACKETS[n.id].some(a => norm(a) === guess));
     if (hit) {
       hit.solved = true;
-      try { localStorage.setItem(SAVE, JSON.stringify(nodes.filter(n => n.solved).map(n => n.id))); } catch {}
       input.value = "";
       msg.textContent = "";
       draw();
@@ -315,14 +299,9 @@ const BRACKETS = [
     });
   });
 
-  RESETS[4] = () => {
-    cells.flat().filter(Boolean).forEach(({ input }) => { input.value = ""; input.readOnly = false; });
-  };
-
-  // If it was already solved on this device, fill it in.
-  if (load() >= 4) {
+  SKIPS[4] = () => {
     cells.flat().filter(Boolean).forEach(({ input, r, c }) => { input.value = GRID[r][c]; input.readOnly = true; });
-  }
+  };
 })();
 
 // Where Taken: one photo at a time, photos/1.jpg, photos/2.jpg, ... in this order.
@@ -335,11 +314,8 @@ const PLACES = ["california", "wisconsin", "illinois", "space", "indiana", "mich
   const form = document.getElementById("photo-form");
   const input = form.querySelector("input");
   const msg = form.querySelector(".msg");
-  const SAVE = "five-for-five-photos";
 
   let i = 0;
-  try { i = Number(localStorage.getItem(SAVE)) || 0; } catch {}
-  if (load() >= 5) i = PLACES.length - 1;
 
   function show() {
     img.src = `photos/${i + 1}.jpg`;
@@ -360,15 +336,8 @@ const PLACES = ["california", "wisconsin", "illinois", "space", "indiana", "mich
     msg.textContent = "";
     if (i + 1 === PLACES.length) return solve(5);
     i++;
-    try { localStorage.setItem(SAVE, i); } catch {}
     show();
   });
-
-  RESETS[5] = () => {
-    i = 0;
-    try { localStorage.setItem(SAVE, 0); } catch {}
-    show();
-  };
 
   show();
 })();
