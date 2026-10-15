@@ -56,6 +56,37 @@ sections.slice(1).forEach(s => {
   s.appendChild(btn);
 });
 
+// The letter: decode it in place, one character at a time.
+const CIPHER_KEY = "DRSKHBTXANQUOIYMPLVWFZJEGC"; // A-Z in the plain text became these letters
+const LINK = "https://demi-decade.github.io";   // left as-is in the cipher so it stays clickable
+
+document.getElementById("decipher").addEventListener("click", e => {
+  e.target.disabled = true;
+  const pre = document.querySelector(".cipher");
+  const from = pre.textContent;
+  const decode = ch => {
+    const i = CIPHER_KEY.indexOf(ch.toUpperCase());
+    if (i < 0) return ch;
+    const p = String.fromCharCode(65 + i);
+    return ch === ch.toUpperCase() ? p : p.toLowerCase();
+  };
+  const to = from.split(LINK).map(part => [...part].map(decode).join("")).join(LINK);
+
+  const done = document.createElement("span");
+  const todo = document.createElement("span");
+  todo.className = "todo";
+  pre.replaceChildren(done, todo);
+
+  const start = performance.now();
+  const msPerChar = 6;
+  (function frame(now) {
+    const i = Math.min(to.length, Math.floor((now - start) / msPerChar));
+    done.textContent = to.slice(0, i);
+    todo.textContent = from.slice(i);
+    if (i < to.length) requestAnimationFrame(frame);
+  })(start);
+});
+
 // Text answers
 document.querySelectorAll("form.answer[data-answer]").forEach(form => {
   const input = form.querySelector("input");

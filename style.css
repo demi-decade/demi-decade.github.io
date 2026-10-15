@@ -43,12 +43,15 @@ h2 .num { color: var(--accent); margin-right: 6px; }
 }
 
 .note { color: var(--faded); font-style: italic; margin-top: 0; }
-.clue { font-size: 24px; font-style: italic; }
+.clue { font-size: 24px; }
 .len { font-style: normal; color: var(--faded); }
 .reveal { display: none; margin: 0; font-size: 22px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
 .solved .reveal { display: block; }
 
 summary { cursor: pointer; color: var(--accent); }
+.cipher .todo { color: var(--faded); }
+#decipher { margin-top: 4px; }
+#decipher:disabled { display: none; }
 .cipher {
   white-space: pre-wrap;
   font-family: "Courier New", monospace;
