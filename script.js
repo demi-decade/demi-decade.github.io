@@ -301,7 +301,8 @@ const BRACKETS = [
 })();
 
 // Where Taken: one photo at a time, photos/1.jpg, photos/2.jpg, ... in this order.
-const PLACES = ["california", "wisconsin", "illinois", "space", "indiana", "michigan", "ontario"];
+// Use an array to accept more than one answer for a photo.
+const PLACES = ["california", "wisconsin", "illinois", "space", "indiana", "michigan", "ontario", "utah", ["carolina", "south carolina"]];
 
 (function () {
   const img = document.getElementById("photo");
@@ -325,7 +326,7 @@ const PLACES = ["california", "wisconsin", "illinois", "space", "indiana", "mich
     e.preventDefault();
     const guess = norm(input.value);
     if (!guess) return;
-    if (guess !== norm(PLACES[i])) {
+    if (![].concat(PLACES[i]).some(p => norm(p) === guess)) {
       msg.textContent = "Not quite.";
       msg.className = "msg";
       return;
