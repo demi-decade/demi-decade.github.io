@@ -166,6 +166,17 @@ button:hover { background: var(--accent); }
 .photo figcaption { margin-top: 10px; font-size: 15px; color: var(--faded); letter-spacing: 0.1em; }
 
 
+.finale {
+  border-top: 1px solid var(--rule);
+  padding-top: 48px;
+  margin: 0;
+  text-align: center;
+  font-size: 28px;
+  color: var(--accent);
+  text-wrap: balance;
+}
+.finale[hidden] { display: none; }
+
 @media (max-width: 480px) {
   h1 { font-size: 28px; }
   .grid { grid-template-columns: repeat(5, 1fr); grid-template-rows: none; width: 100%; }

@@ -36,6 +36,7 @@ function render() {
     s.hidden = n > done + 1;
     s.classList.toggle("solved", n <= done);
   });
+  document.getElementById("finale").hidden = done < sections.length;
 }
 
 function solve(n) {
