@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Five for Five</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <p class="kicker">A demi-decade</p>
+      <h1>Five for Five</h1>
+      <p class="sub">Five puzzles for five years. Solve one to open the next.</p>
+    </header>
+
+    <section class="puzzle solved" data-n="1">
+      <h2><span class="num">I.</span> The Letter</h2>
+      <p>You cracked the cipher, which is how you ended up here. One down.</p>
+      <details>
+        <summary>See it again</summary>
+        <pre class="cipher">Og Khdlhvw, Hohuaih,
+
+Xdmmg bazh ghdl diiazhlvdlg! A sdi'w rhuahzh jh'zh rhhi wythwxhl byl d jxyuh khoa-khsdkh! A'zh uyzhk hzhlg oyohiw wxdw A'zh tyw wy vmhik jawx gyf. Gyf'lh og mhlvyi. Og uyzh.
+
+A do vy firhuahzdrug tldwhbfu yb wxh waohv jh'zh vmhiw wythwxhl dik A thw vy takkg wxaiqait dryfw duu wxh mlyruhov dik dkzhiwflhv jh vwauu thw wy wdsquh wythwxhl. A jdiw wy vmhik wxh lhvw yb og uabh jawx gyf. Wxaiq yb xyj odig hzhiait mfccuhv jh vwauu xdzh wy vyuzh! Wy qasq fv ybb, A khvatihk 5 mfccuhv byl yfl 5 ghdl diiazhlvdlg! Gyf'lh sfllhiwug vyuzait wxh balvw yih! Syitldwv! Sxhsq yfw wxh uaiq rhuyj byl oylh:
+
+https://demi-decade.github.io
+
+Gyflv,
+Klhj</pre>
+      </details>
+    </section>
+
+    <section class="puzzle" data-n="2">
+      <h2><span class="num">II.</span> A Cryptic</h2>
+      <p class="clue">What you might like to drink every second of the day <span class="len">(3)</span></p>
+      <form class="answer" data-answer="tea">
+        <input type="text" autocomplete="off" spellcheck="false" aria-label="Answer">
+        <button>Check</button>
+        <span class="msg"></span>
+      </form>
+    </section>
+
+    <section class="puzzle" data-n="3">
+      <h2><span class="num">III.</span> Bracket City</h2>
+      <p class="note">Solve the innermost brackets first and work your way out. Type the whole quote once it resolves.</p>
+      <p class="brackets" id="brackets">"["To [w[yours says "Michigan La[🩸 red --> ___ --> fit 💪]e" for some reason] comes before fifteen, to some] at all is to be vulnerable" -- __ lewis] seems [🎵 a [all you __ is love! Bah da da da dummm]le pulling thread 🎵] toxic" -- Eme[🪢 [what you do after one of your orchestra per[__ vs. function - like that one [might be Eucaryotic or Procaryotic]o stand that Frank Lloyd Wright designed]ances] ____ up ⬆️] Hanna, [What's a babes without lincoln?] [the *a[Jerry's arch enemy]*'s family?] [One of the E s in EECS]</p>
+      <form class="answer" data-answer="csseemssotoxic" data-contains>
+        <input type="text" autocomplete="off" spellcheck="false" aria-label="Answer">
+        <button>Check</button>
+        <span class="msg"></span>
+      </form>
+    </section>
+
+    <section class="puzzle" data-n="4">
+      <h2><span class="num">IV.</span> A Small Crossword</h2>
+      <div class="xw">
+        <div class="grid" id="grid"></div>
+        <div class="clues">
+          <div>
+            <h3>Across</h3>
+            <ol id="across"></ol>
+          </div>
+          <div>
+            <h3>Down</h3>
+            <ol id="down"></ol>
+          </div>
+        </div>
+      </div>
+      <p class="msg" id="xw-msg"></p>
+    </section>
+
+    <section class="puzzle" data-n="5">
+      <h2><span class="num">V.</span> Where Were We?</h2>
+      <p class="note">All of these were taken in the same state. Which one?</p>
+      <div class="photos">
+        <img src="photos/1.jpg" alt="">
+        <img src="photos/2.jpg" alt="">
+        <img src="photos/3.jpg" alt="">
+        <img src="photos/4.jpg" alt="">
+        <img src="photos/5.jpg" alt="">
+      </div>
+      <form class="answer" data-answer="michigan">
+        <input type="text" autocomplete="off" spellcheck="false" aria-label="State" placeholder="State">
+        <button>Check</button>
+        <span class="msg"></span>
+      </form>
+    </section>
+
+    <footer id="finale">
+      <p>Five for five. Happy anniversary, Emeline.</p>
+      <p class="sig">&mdash; Drew</p>
+    </footer>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
